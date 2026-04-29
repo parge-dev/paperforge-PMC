@@ -16,7 +16,7 @@ This isn’t a finished modpack or anything polished. It’s more of a sandbox w
 ## What you’ll find
 
 - Experimental mods  
-- Half-finished ideas  
+- Half finished ideas  
 - Small gameplay changes  
 - Random builds or concepts  
 - Stuff that might break or not make sense
