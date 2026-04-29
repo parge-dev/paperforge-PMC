@@ -11,7 +11,7 @@
 <style>
 body { margin:0; font-family:Arial; background:#0f172a; color:#e2e8f0; }
 header { background:#1e293b; padding:20px; text-align:center; }
-nav { display:flex; justify-content:center; background:#020617; padding:10px; }
+nav { display:flex; justify-content:center; background:#020617; padding:10px; flex-wrap:wrap; }
 nav a { color:white; margin:0 10px; text-decoration:none; }
 .page { display:none; padding:20px; max-width:900px; margin:auto; }
 .active { display:block; }
@@ -19,8 +19,10 @@ nav a { color:white; margin:0 10px; text-decoration:none; }
 textarea, input { width:100%; margin-top:10px; padding:8px; }
 button { margin-top:10px; padding:10px; background:#38bdf8; border:none; cursor:pointer; }
 .comment { background:#020617; padding:10px; margin-top:10px; border-radius:6px; }
+.mod { background:#020617; padding:10px; margin-top:10px; border-radius:6px; }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -29,25 +31,72 @@ button { margin-top:10px; padding:10px; background:#38bdf8; border:none; cursor:
 
 <nav>
 <a href="#" onclick="showPage('about')">About</a>
+<a href="#" onclick="showPage('mods')">Current Mods</a>
 <a href="#" onclick="showPage('download')">Download</a>
 <a href="#" onclick="showPage('comments')">Comments</a>
 </nav>
 
+<!-- ABOUT -->
 <div id="about" class="page active">
 <div class="card">
 <h2>About</h2>
 <p>
-PaperForge PMC is a place where people and i can mess around with mods and ideas for Paper Minecraft. It’s basically a gallery of stuff people and i made, plus random concepts and experiments.
-</p>
-<p>
-The binary thing is there because cloud variables only use numbers, so mod ideas are sent using 1s and 0s. It’s a bit weird, but it works.
-</p>
-<p>
-Mostly this is just about trying new things, making cool stuff, and seeing what Paper Minecraft can do.
-</p>
+
+PaperForge PMC is a place where I mess around with mods, ideas, and experiments for Paper Minecraft.
+
+It’s basically a collection of stuff I’ve made (and sometimes other people have made too), including random concepts, small tweaks, and things I wanted to try out.
+
+## What this is
+
+This isn’t a finished modpack or anything polished. It’s more of a sandbox where I can:
+
+- Test ideas
+- Make small mods or changes
+- Try random concepts
+- See what can be done in Paper Minecraft
+
+## What you’ll find
+
+- Experimental mods  
+- Half-finished ideas  
+- Small gameplay changes  
+- Random builds or concepts  
+- Stuff that might break or not make sense
+
+## Why it exists
+
+Just for fun and experimentation. No big goal, just seeing what works and what doesn’t inside Paper Minecraft.
+
+## Note
+
+Most of this is unfinished or experimental, so expect weird or broken things.
 </div>
 </div>
 
+<!-- MODS -->
+<div id="mods" class="page">
+<div class="card">
+<h2>Current Mods</h2>
+
+<div class="mod">
+<b>Example Mod 1</b>
+<p>Short description of what the mod does.</p>
+</div>
+
+<div class="mod">
+<b>Example Mod 2</b>
+<p>Another mod idea or feature goes here.</p>
+</div>
+
+<div class="mod">
+<b>Experimental Stuff</b>
+<p>Random tests and unfinished ideas.</p>
+</div>
+
+</div>
+</div>
+
+<!-- DOWNLOAD -->
 <div id="download" class="page">
 <div class="card">
 <h2>Download</h2>
@@ -57,6 +106,7 @@ Mostly this is just about trying new things, making cool stuff, and seeing what 
 </div>
 </div>
 
+<!-- COMMENTS -->
 <div id="comments" class="page">
 <div class="card">
 <h2>Comments</h2>
@@ -76,7 +126,6 @@ function showPage(page) {
   document.getElementById(page).classList.add('active');
 }
 
-// ✅ FIXED: added databaseURL (THIS WAS WHY COMMENTS DIDN'T SHOW)
 const firebaseConfig = {
   apiKey: "AIzaSyB1ilBMBdo6qzu9ao8gvpBOwuaok69BL_Q",
   authDomain: "paperforge-pmc.firebaseapp.com",
@@ -100,7 +149,6 @@ function postComment() {
     return;
   }
 
-  // VERY SIMPLE password system (not secure, but works)
   const userRef = db.ref('users/' + user);
 
   userRef.once('value').then(snapshot => {
@@ -111,7 +159,6 @@ function postComment() {
       }
       sendComment(user, text);
     } else {
-      // create new user
       userRef.set({ password: pass });
       sendComment(user, text);
     }
@@ -123,7 +170,6 @@ function sendComment(user, text) {
   document.getElementById('commentInput').value = '';
 }
 
-// LIVE COMMENTS
 const commentRef = db.ref('comments');
 commentRef.on('value', snapshot => {
   const list = document.getElementById('commentList');
